@@ -7,21 +7,23 @@ on:
   workflow_dispatch:
 
 jobs:
-  train:
+  training-job:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Install Python
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      - name: Install MLflow and Dependencies
+      - name: Install Dependencies
         run: |
           pip install mlflow==2.18.0 pandas scikit-learn
 
       - name: Run MLflow Project
         run: |
-          mlflow run . -P n_estimators=150
+          cd MLProject
+          mlflow run . -P n_estimators=150 --no-conda
