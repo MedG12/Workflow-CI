@@ -27,3 +27,12 @@ jobs:
         run: |
           cd MLProject
           mlflow run . -P n_estimators=150 --env-manager local
+        env:
+          MLFLOW_TRACKING_URI: "file:./mlruns"
+
+      - name: Save Artifacts to GitHub
+        uses: actions/upload-artifact@v4
+        with:
+          name: MLflow-Model-Artifacts
+          path: MLProject/mlruns/
+          retention-days: 7
