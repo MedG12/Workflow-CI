@@ -10,7 +10,11 @@ parser.add_argument("--n_estimators", type=int, default=100)
 parser.add_argument("--random_state", type=int, default=42)
 args = parser.parse_args()
 
-mlflow.set_tracking_uri("http://127.0.0.1:5000") 
+if os.getenv('GITHUB_ACTIONS'):
+    mlflow.set_tracking_uri("file:./mlruns")
+else:
+    mlflow.set_tracking_uri("http://127.0.0.1:5000")
+    
 mlflow.set_experiment("Eksperimen_rf_model_base")
 
 mlflow.autolog(
