@@ -26,7 +26,7 @@ jobs:
       - name: Run MLflow Project
         run: |
           cd MLProject
-          mlflow run . -P n_estimators=150 --env-manager local
+          mlflow run . -P n_estimators=150 --env-manager local --experiment-name "Eksperimen_rf_model_base"
         env:
           MLFLOW_TRACKING_URI: "file:./mlruns"
 
