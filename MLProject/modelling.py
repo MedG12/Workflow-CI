@@ -33,8 +33,14 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 rf_model = RandomForestRegressor(n_estimators=args.n_estimators, random_state=args.random_state)
 
 print(f"Memulai training model dengan n_estimators: {args.n_estimators}...")
-with mlflow.start_run(run_name="RandomForest_Base"):
+active_run = mlflow.active_run()
+if active_run:
     rf_model.fit(X_train, y_train)
     rf_pred = rf_model.predict(X_test)
     print(f"RF R2 Score: {r2_score(y_test, rf_pred)}")
+else:
+    with mlflow.start_run(run_name="RandomForest_Base"):
+        rf_model.fit(X_train, y_train)
+        rf_pred = rf_model.predict(X_test)
+        print(f"RF R2 Score: {r2_score(y_test, rf_pred)}")
 print("Selesai training model.")
