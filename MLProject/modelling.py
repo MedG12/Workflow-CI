@@ -16,7 +16,8 @@ if os.getenv('GITHUB_ACTIONS'):
 else:
     mlflow.set_tracking_uri("http://127.0.0.1:5000")
     
-mlflow.set_experiment("Eksperimen_rf_model_base")
+if not mlflow.active_run():
+    mlflow.set_experiment("Eksperimen_rf_model_base")
 
 mlflow.autolog(
     log_models=True,
